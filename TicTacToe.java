@@ -37,8 +37,6 @@ public class TicTacToe {
         boolean userTurn = true;
         
         userPlay(gameBoard, userTurn);
-        // String result = gameOver();
-        // System.out.println(result);
     }
 
     public static void userPlay (char gameBoard[][], boolean userTurn) {
@@ -50,16 +48,24 @@ public class TicTacToe {
 
         Scanner scnr = new Scanner(System.in);
         Random random = new Random();
-
+        
         if (!userTurn) {
             input = random.nextInt(9) + 1;
-            userPlacements.add(input);
+            while (userPlacements.contains(input) || compPlacements.contains(input)) {
+                System.out.println("\nWhoops, wrong position. Sorry!");
+                input = random.nextInt(9) + 1;
+            }
+            compPlacements.add(input);
             symbol = 'x';
             userTurn = true;
-            }
+        }
         else {
             input = scnr.nextInt();
-            compPlacements.add(input);
+            while (compPlacements.contains(input) || userPlacements.contains(input)) {
+                System.out.println("\nToo bad! This spot is taken! Select a different one:\n");
+                input = scnr.nextInt();
+            }
+            userPlacements.add(input);
             symbol = 'o';
             userTurn = false;
             }
@@ -81,9 +87,6 @@ public class TicTacToe {
                 System.out.println(result);
             }
         }
-            //     System.out.println("\nToo bad! This spot is taken! Select a different one:\n");
-            //     userArray[i] = scnr.nextInt();
-            // }
 
     public static void printArray (char gameBoard[][]) {
         // Since this is a 2D array 'for each' loops are a good idea. However, I'll stay with the traditional 'for' loop for now.
@@ -116,11 +119,11 @@ public class TicTacToe {
         win.add(rightDiag);
 
         for(List l : win) {
-            if (compPlacements.containsAll(l)){
+            if (userPlacements.containsAll(l)){
                 return "\nOh wow! You did it!\n\n";
             }
 
-            else if (userPlacements.containsAll(l)) {
+            else if (compPlacements.containsAll(l)) {
                 return "\nMuahaha! Better luck next time!\n\n";
             }
 
