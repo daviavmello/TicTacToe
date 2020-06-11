@@ -39,7 +39,7 @@ public class TicTacToe {
         userPlay(gameBoard, userTurn);
     }
 
-    public static void userPlay (char gameBoard[][], boolean userTurn) {
+    public static int userPlay (char gameBoard[][], boolean userTurn) {
         while(true) {
         System.out.print("\nChoose your placement (1-9):\n\n");
 
@@ -85,6 +85,10 @@ public class TicTacToe {
                 printArray(gameBoard);
                 String result = gameOver();
                 System.out.println(result);
+
+                if (result!= "") {
+                    return 0;
+                }
             }
         }
 
@@ -131,7 +135,7 @@ public class TicTacToe {
                 return "\nOh no! It's a draw!\n\n";
             }
         }
-        return " ";
+        return "";
     }
 
 }
